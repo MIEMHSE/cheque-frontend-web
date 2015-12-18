@@ -25,7 +25,7 @@
             <input class="btn btn-warning" type="button" value="Ввести вручную">
         </p>
         <div id="my_camera" style="margin-left: 30px;"></div>
-        <input type="button" id="save_snapshot_btn" value="Сфотографировать чек" onClick="take_snapshot()"
+        <input type="button" id="save_snapshot_btn" value="Сфотографировать чек"
             style="display:none;margin-top: 20px;margin-left: 30px;" class="btn btn-primary">
 
         <progress style="display:none;"></progress>

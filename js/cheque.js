@@ -59,7 +59,7 @@ $(document).ready(function() {
     function uploadCompleted(jqXHR, textStatus) {
         var sa = $('#save_as');
         sa.html("Сохранено");
-        sa.disable();
+        sa.prop("disabled", true);
         console.log(textStatus);
         console.log(jqXHR.responseJSON);
     }
@@ -67,7 +67,7 @@ $(document).ready(function() {
     function uploadError(jqXHR, textStatus, errorThrown) {
         var sa = $('#save_as');
         sa.html("Ошибка при сохранении");
-        sa.disable();
+        sa.prop("disabled", true);
         console.log(textStatus);
         console.log(jqXHR.responseJSON);
     }
