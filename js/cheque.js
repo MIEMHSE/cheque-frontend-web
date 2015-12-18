@@ -15,7 +15,7 @@ $(document).ready(function() {
         Webcam.snap(function (data_uri) {
             $('#results').html(
                 '<img id="base64image" src="' + data_uri + '"/><br><br>' +
-                '<button id="save_as" class="btn btn-primary" onclick="SaveSnap();">Сохранить чек</button>'
+                '<button id="save_snapshot_btn" class="btn btn-primary" onclick="SaveSnap();">Сохранить чек</button>'
             );
         });
     });
@@ -32,7 +32,7 @@ $(document).ready(function() {
 
     $('#save_snapshot_btn').click(function(){
         $('progress').show();
-        $('#save_as').html('Saving, please wait...');
+        $('#save_snapshot_btn').html('Saving, please wait...');
         var file = $('#base64image').attr('src');
         var formData = new FormData();
         formData.append('image', file);
@@ -57,19 +57,19 @@ $(document).ready(function() {
     });
 
     function uploadCompleted(jqXHR, textStatus) {
-        var sa = $('#save_as');
+        var sa = $('#save_snapshot_btn');
         sa.html("Сохранено");
         sa.prop("disabled", true);
         console.log(textStatus);
-        console.log(jqXHR.responseJSON);
+        console.log(jqXHR.responseText);
     }
 
     function uploadError(jqXHR, textStatus, errorThrown) {
-        var sa = $('#save_as');
+        var sa = $('#save_snapshot_btn');
         sa.html("Ошибка при сохранении");
         sa.prop("disabled", true);
         console.log(textStatus);
-        console.log(jqXHR.responseJSON);
+        console.log(jqXHR.responseText);
     }
 
 });

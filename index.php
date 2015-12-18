@@ -20,12 +20,12 @@
 
 	<form>
         <p style="margin-top: 20px; margin-left: 30px;">
-            <input class="btn btn-success" id="show_camera_btn" type="button" value="Сфотографировать чек">
-            <input class="btn btn-info" type="button" value="Выбрать файл">
-            <input class="btn btn-warning" type="button" value="Ввести вручную">
+            <input class="btn btn-success" id="show_camera_btn" type="button" value="Использовать камеру">
+            <!-- input class="btn btn-info" type="button" value="Выбрать файл">
+            <input class="btn btn-warning" type="button" value="Ввести вручную" -->
         </p>
         <div id="my_camera" style="margin-left: 30px;"></div>
-        <input type="button" id="save_snapshot_btn" value="Сфотографировать чек"
+        <input type="button" id="take_snapshot_btn" value="Сфотографировать чек"
             style="display:none;margin-top: 20px;margin-left: 30px;" class="btn btn-primary">
 
         <progress style="display:none;"></progress>
