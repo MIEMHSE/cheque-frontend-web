@@ -28,7 +28,7 @@
         <input type="button" id="save_snapshot_btn" value="Сфотографировать чек" onClick="take_snapshot()"
             style="display:none;margin-top: 20px;margin-left: 30px;" class="btn btn-primary">
 
-        <progress></progress>
+        <progress style="display:none;"></progress>
 	</form>
 </body>
 </html>

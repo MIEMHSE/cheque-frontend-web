@@ -2,8 +2,7 @@ $(document).ready(function() {
     Webcam.set({
         width: 320,
         height: 240,
-        image_format: 'jpeg',
-        jpeg_quality: 90
+        image_format: 'png'
     });
 
     $('#show_camera_btn').click(function() {
@@ -32,10 +31,11 @@ $(document).ready(function() {
     }
 
     $('#save_snapshot_btn').click(function(){
+        $('progress').show();
         $('#save_as').html('Saving, please wait...');
         var file = $('#base64image').attr('src');
         var formData = new FormData();
-        formData.append('base64image', file);
+        formData.append('image', file);
         $.ajax({
             url: 'api/v1/cheque/',
             type: 'POST',
@@ -47,8 +47,8 @@ $(document).ready(function() {
                 return myXhr;
             },
             beforeSend: outputArguments,
-            success: outputArguments,
-            error: outputArguments,
+            success: uploadCompleted,
+            error: uploadError,
             data: formData,
             cache: false,
             contentType: false,
@@ -56,12 +56,16 @@ $(document).ready(function() {
         });
     });
 
-    function uploadCompleted(event) {
-        $('#save_as').html("Сохранено");
-        document.getElementById("save_as").disabled = true;
-        var image_return = event.target.responseText;
-        console.log(event.target.responseText);
-        var showup = document.getElementById("save_as").src = image_return;
+    function uploadCompleted(jqXHR, textStatus) {
+        $('#save_as').html("Сохранено").disable();
+        console.log(textStatus);
+        console.log(jqXHR.responseJSON);
     }
 
-})(window);
+    function uploadError(jqXHR, textStatus, errorThrown) {
+        $('#save_as').html("Сохранено").disable();
+        console.log(textStatus);
+        console.log(jqXHR.responseJSON);
+    }
+
+});
