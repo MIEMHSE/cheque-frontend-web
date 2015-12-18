@@ -15,8 +15,33 @@ $(document).ready(function() {
         Webcam.snap(function (data_uri) {
             $('#results').html(
                 '<img id="base64image" src="' + data_uri + '"/><br><br>' +
-                '<button id="save_snapshot_btn" class="btn btn-primary" onclick="SaveSnap();">Сохранить чек</button>'
+                '<button id="save_snapshot_btn" class="btn btn-primary">Сохранить чек</button>'
             );
+            $('#save_snapshot_btn').click(function() {
+                $('progress').show();
+                $('#save_snapshot_btn').html('Saving, please wait...');
+                var file = $('#base64image').attr('src');
+                var formData = new FormData();
+                formData.append('image', file);
+                $.ajax({
+                    url: 'api/v1/cheque/',
+                    type: 'POST',
+                    xhr: function() {
+                        var myXhr = $.ajaxSettings.xhr();
+                        if(myXhr.upload) {
+                            myXhr.upload.addEventListener('progress', progressHandlingFunction, false);
+                        }
+                        return myXhr;
+                    },
+                    beforeSend: outputArguments,
+                    success: uploadCompleted,
+                    error: uploadError,
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            });
         });
     });
 
@@ -29,32 +54,6 @@ $(document).ready(function() {
     function outputArguments() {
         console.log(arguments);
     }
-
-    $('#save_snapshot_btn').click(function(){
-        $('progress').show();
-        $('#save_snapshot_btn').html('Saving, please wait...');
-        var file = $('#base64image').attr('src');
-        var formData = new FormData();
-        formData.append('image', file);
-        $.ajax({
-            url: 'api/v1/cheque/',
-            type: 'POST',
-            xhr: function() {
-                var myXhr = $.ajaxSettings.xhr();
-                if(myXhr.upload) {
-                    myXhr.upload.addEventListener('progress', progressHandlingFunction, false);
-                }
-                return myXhr;
-            },
-            beforeSend: outputArguments,
-            success: uploadCompleted,
-            error: uploadError,
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false
-        });
-    });
 
     function uploadCompleted(jqXHR, textStatus) {
         var sa = $('#save_snapshot_btn');
