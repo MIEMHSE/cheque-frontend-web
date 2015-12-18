@@ -36,6 +36,7 @@ $(document).ready(function() {
                     var sa = $('#save_snapshot_btn');
                     sa.html("Сохранено");
                     sa.prop("disabled", true);
+                    $('progress').hide();
                 });
             });
         });
