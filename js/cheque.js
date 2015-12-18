@@ -7,7 +7,7 @@ $(document).ready(function() {
 
     $('#show_camera_btn').click(function() {
         Webcam.attach('#my_camera');
-        $('#save_snapshot_btn').show();
+        $('#take_snapshot_btn').show();
         $('#results').show();
     });
 
