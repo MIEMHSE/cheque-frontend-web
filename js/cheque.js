@@ -32,8 +32,6 @@ $(document).ready(function() {
                 $('progress').show();
                 $('#save_snapshot_btn').html('Saving, please wait...');
                 var file_content = $('#base64image').attr('src');
-                var formData = new FormData();
-                formData.append('image', file);
                 Webcam.upload(file_content, 'api/v1/cheque/', function() {
                     var sa = $('#save_snapshot_btn');
                     sa.html("Сохранено");
