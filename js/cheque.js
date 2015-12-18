@@ -12,6 +12,8 @@ $(document).ready(function() {
     });
 
     $('#take_snapshot_btn').click(function() {
+        Webcam.params.upload_name = 'image';
+
         Webcam.hooks.uploadProgress = progressHandlingFunction;
         Webcam.hooks.uploadComplete = function(status, responseText, statusText) {
             console.log('Upload completed!');
