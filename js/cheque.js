@@ -57,13 +57,17 @@ $(document).ready(function() {
     });
 
     function uploadCompleted(jqXHR, textStatus) {
-        $('#save_as').html("Сохранено").disable();
+        var sa = $('#save_as');
+        sa.html("Сохранено");
+        sa.disable();
         console.log(textStatus);
         console.log(jqXHR.responseJSON);
     }
 
     function uploadError(jqXHR, textStatus, errorThrown) {
-        $('#save_as').html("Сохранено").disable();
+        var sa = $('#save_as');
+        sa.html("Ошибка при сохранении");
+        sa.disable();
         console.log(textStatus);
         console.log(jqXHR.responseJSON);
     }
