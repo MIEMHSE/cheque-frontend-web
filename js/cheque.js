@@ -12,6 +12,17 @@ $(document).ready(function() {
     });
 
     $('#take_snapshot_btn').click(function() {
+        Webcam.hooks.uploadProgress = progressHandlingFunction;
+        Webcam.hooks.uploadComplete = function(status, responseText, statusText) {
+            console.log('Upload completed!');
+            console.log(status);
+            console.log(responseText);
+            console.log(statusText);
+        };
+        Webcam.hooks.error = function() {
+            console.log(arguments);
+        };
+
         Webcam.snap(function (data_uri) {
             $('#results').html(
                 '<img id="base64image" src="' + data_uri + '"/><br><br>' +
@@ -20,26 +31,13 @@ $(document).ready(function() {
             $('#save_snapshot_btn').click(function() {
                 $('progress').show();
                 $('#save_snapshot_btn').html('Saving, please wait...');
-                var file = $('#base64image').attr('src');
+                var file_content = $('#base64image').attr('src');
                 var formData = new FormData();
                 formData.append('image', file);
-                $.ajax({
-                    url: 'api/v1/cheque/',
-                    type: 'POST',
-                    xhr: function() {
-                        var myXhr = $.ajaxSettings.xhr();
-                        if(myXhr.upload) {
-                            myXhr.upload.addEventListener('progress', progressHandlingFunction, false);
-                        }
-                        return myXhr;
-                    },
-                    beforeSend: outputArguments,
-                    success: uploadCompleted,
-                    error: uploadError,
-                    data: formData,
-                    cache: false,
-                    contentType: false,
-                    processData: false
+                Webcam.upload(file_content, 'api/v1/cheque/', function() {
+                    var sa = $('#save_snapshot_btn');
+                    sa.html("Сохранено");
+                    sa.prop("disabled", true);
                 });
             });
         });
@@ -49,26 +47,6 @@ $(document).ready(function() {
         if(e.lengthComputable){
             $('progress').attr({value:e.loaded,max:e.total});
         }
-    }
-
-    function outputArguments() {
-        console.log(arguments);
-    }
-
-    function uploadCompleted(jqXHR, textStatus) {
-        var sa = $('#save_snapshot_btn');
-        sa.html("Сохранено");
-        sa.prop("disabled", true);
-        console.log(textStatus);
-        console.log(jqXHR.responseText);
-    }
-
-    function uploadError(jqXHR, textStatus, errorThrown) {
-        var sa = $('#save_snapshot_btn');
-        sa.html("Ошибка при сохранении");
-        sa.prop("disabled", true);
-        console.log(textStatus);
-        console.log(jqXHR.responseText);
     }
 
 });
