@@ -20,7 +20,31 @@ $(document).ready(function() {
             console.log(status);
             console.log(responseText);
             console.log(statusText);
+
+            if (status == 200) {
+                var response = JSON.parse(responseText),
+                    image_id = response._id,
+                    $got_text = $('#got_text'),
+                    url = 'api/v1/cheque/' + image_id;
+
+                var get_text_function = function () {
+                    $.get(url, function (data) {
+                        var text_rus = data.text_rus,
+                            text_eng = data.text_eng;
+
+                        if (text_rus !== undefined) {
+                            $got_text.text(text_rus);
+                            $got_text.show();
+                        } else {
+                            setTimeout(get_text_function, 1000);
+                        }
+                    })
+                };
+
+                get_text_function();
+            }
         };
+
         Webcam.hooks.error = function() {
             console.log(arguments);
         };

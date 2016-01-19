@@ -29,6 +29,7 @@
             style="display:none;margin-top: 20px;margin-left: 30px;" class="btn btn-primary">
 
         <progress style="display:none;"></progress>
+        <textarea id="got_text" style="display:none;" cols="100" rows="60"></textarea>
 	</form>
 </body>
 </html>
