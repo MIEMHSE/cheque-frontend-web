@@ -38,7 +38,7 @@ $(document).ready(function() {
                         } else {
                             setTimeout(get_text_function, 1000);
                         }
-                    })
+                    });
                 };
 
                 get_text_function();
